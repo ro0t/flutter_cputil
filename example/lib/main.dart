@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String templateBytes = 'Unknown';
   final _flutterCputilPlugin = FlutterCputil();
 
   @override
@@ -27,14 +27,13 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
+    Uint8List? _bytes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _flutterCputilPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      _bytes = await _flutterCputilPlugin.convert("");
+    } catch (e, s) {
+      _bytes = null;
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -43,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      templateBytes = _bytes != null ? _bytes.toString() : "TemplateBytes is null";
     });
   }
 
@@ -52,10 +51,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('CPUtil example plugin app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Text('Response: $templateBytes\n'),
         ),
       ),
     );

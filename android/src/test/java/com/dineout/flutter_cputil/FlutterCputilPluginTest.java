@@ -20,7 +20,7 @@ public class FlutterCputilPluginTest {
   public void onMethodCall_getPlatformVersion_returnsExpectedValue() {
     FlutterCputilPlugin plugin = new FlutterCputilPlugin();
 
-    final MethodCall call = new MethodCall("getPlatformVersion", null);
+    final MethodCall call = new MethodCall("convert", null);
     MethodChannel.Result mockResult = mock(MethodChannel.Result.class);
     plugin.onMethodCall(call, mockResult);
 

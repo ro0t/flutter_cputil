@@ -7,6 +7,8 @@
 // https://docs.flutter.dev/cookbook/testing/integration/introduction
 
 
+import 'dart:typed_data';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -15,11 +17,11 @@ import 'package:flutter_cputil/flutter_cputil.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('getPlatformVersion test', (WidgetTester tester) async {
+  testWidgets('conert test', (WidgetTester tester) async {
     final FlutterCputil plugin = FlutterCputil();
-    final String? version = await plugin.getPlatformVersion();
+    final Uint8List? bytes = await plugin.convert("Template");
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
-    expect(version?.isNotEmpty, true);
+    expect(bytes?.isNotEmpty, true);
   });
 }

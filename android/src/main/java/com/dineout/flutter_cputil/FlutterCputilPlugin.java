@@ -1,5 +1,7 @@
 package com.dineout.flutter_cputil;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -24,15 +26,21 @@ public class FlutterCputilPlugin implements FlutterPlugin, MethodCallHandler {
 
   @Override
   public void onMethodCall(
-          @NonNull MethodCall call, @NonNull
-          Result result
+      @NonNull MethodCall call, @NonNull
+      Result result
   ) {
     var arguments = call.arguments;
 
-    if (call.method.equals("convert")) {
-      var template = arguments["template"];
+    if (call.method.equals("convert") && arguments != null) {
+      try {
+        var template = arguments["template"];
+        Log.d("Convert", "Android " + android.os.Build.VERSION.RELEASE);
+        Log.d("Convert", "Template: " + template);
+        result.success(template.getBytes());
 
-      result.success("Android " + android.os.Build.VERSION.RELEASE + " Template: " + template);
+      } catch (Exception e) {
+        result.error("ConvertError", e.getMessage(), e);
+      }
     } else {
       result.notImplemented();
     }
