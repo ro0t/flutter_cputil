@@ -29,11 +29,9 @@ public class FlutterCputilPlugin implements FlutterPlugin, MethodCallHandler {
       @NonNull MethodCall call, @NonNull
       Result result
   ) {
-    var arguments = call.arguments;
-
     if (call.method.equals("convert") && arguments != null) {
       try {
-        var template = arguments["template"];
+        String template = call.argument("template");
         Log.d("Convert", "Android " + android.os.Build.VERSION.RELEASE);
         Log.d("Convert", "Template: " + template);
         result.success(template.getBytes());
